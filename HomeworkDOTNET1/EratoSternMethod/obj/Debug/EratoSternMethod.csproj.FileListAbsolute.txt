@@ -1,0 +1,7 @@
+C:\Users\gazla\source\repos\HomeworkDOTNET1\EratoSternMethod\bin\Debug\EratoSternMethod.exe.config
+C:\Users\gazla\source\repos\HomeworkDOTNET1\EratoSternMethod\bin\Debug\EratoSternMethod.exe
+C:\Users\gazla\source\repos\HomeworkDOTNET1\EratoSternMethod\bin\Debug\EratoSternMethod.pdb
+C:\Users\gazla\source\repos\HomeworkDOTNET1\EratoSternMethod\obj\Debug\EratoSternMethod.csprojAssemblyReference.cache
+C:\Users\gazla\source\repos\HomeworkDOTNET1\EratoSternMethod\obj\Debug\EratoSternMethod.csproj.CoreCompileInputs.cache
+C:\Users\gazla\source\repos\HomeworkDOTNET1\EratoSternMethod\obj\Debug\EratoSternMethod.exe
+C:\Users\gazla\source\repos\HomeworkDOTNET1\EratoSternMethod\obj\Debug\EratoSternMethod.pdb

@@ -1,0 +1,7 @@
+C:\Users\gazla\source\repos\HomeworkDOTNET1\ToeplitzMatrix\bin\Debug\ToeplitzMatrix.exe.config
+C:\Users\gazla\source\repos\HomeworkDOTNET1\ToeplitzMatrix\bin\Debug\ToeplitzMatrix.exe
+C:\Users\gazla\source\repos\HomeworkDOTNET1\ToeplitzMatrix\bin\Debug\ToeplitzMatrix.pdb
+C:\Users\gazla\source\repos\HomeworkDOTNET1\ToeplitzMatrix\obj\Debug\ToeplitzMatrix.csprojAssemblyReference.cache
+C:\Users\gazla\source\repos\HomeworkDOTNET1\ToeplitzMatrix\obj\Debug\ToeplitzMatrix.csproj.CoreCompileInputs.cache
+C:\Users\gazla\source\repos\HomeworkDOTNET1\ToeplitzMatrix\obj\Debug\ToeplitzMatrix.exe
+C:\Users\gazla\source\repos\HomeworkDOTNET1\ToeplitzMatrix\obj\Debug\ToeplitzMatrix.pdb

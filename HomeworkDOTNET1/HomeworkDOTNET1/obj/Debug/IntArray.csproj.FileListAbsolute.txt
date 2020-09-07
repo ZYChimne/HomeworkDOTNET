@@ -1,0 +1,7 @@
+C:\Users\gazla\source\repos\HomeworkDOTNET1\HomeworkDOTNET1\bin\Debug\HomeworkDOTNET1.exe.config
+C:\Users\gazla\source\repos\HomeworkDOTNET1\HomeworkDOTNET1\bin\Debug\HomeworkDOTNET1.exe
+C:\Users\gazla\source\repos\HomeworkDOTNET1\HomeworkDOTNET1\bin\Debug\HomeworkDOTNET1.pdb
+C:\Users\gazla\source\repos\HomeworkDOTNET1\HomeworkDOTNET1\obj\Debug\IntArray.csprojAssemblyReference.cache
+C:\Users\gazla\source\repos\HomeworkDOTNET1\HomeworkDOTNET1\obj\Debug\IntArray.csproj.CoreCompileInputs.cache
+C:\Users\gazla\source\repos\HomeworkDOTNET1\HomeworkDOTNET1\obj\Debug\HomeworkDOTNET1.exe
+C:\Users\gazla\source\repos\HomeworkDOTNET1\HomeworkDOTNET1\obj\Debug\HomeworkDOTNET1.pdb

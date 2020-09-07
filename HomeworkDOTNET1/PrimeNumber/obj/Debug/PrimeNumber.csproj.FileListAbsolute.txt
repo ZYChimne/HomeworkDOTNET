@@ -1,0 +1,6 @@
+C:\Users\gazla\source\repos\HomeworkDOTNET1\PrimeNumber\bin\Debug\PrimeNumber.exe.config
+C:\Users\gazla\source\repos\HomeworkDOTNET1\PrimeNumber\bin\Debug\PrimeNumber.exe
+C:\Users\gazla\source\repos\HomeworkDOTNET1\PrimeNumber\bin\Debug\PrimeNumber.pdb
+C:\Users\gazla\source\repos\HomeworkDOTNET1\PrimeNumber\obj\Debug\PrimeNumber.csproj.CoreCompileInputs.cache
+C:\Users\gazla\source\repos\HomeworkDOTNET1\PrimeNumber\obj\Debug\PrimeNumber.exe
+C:\Users\gazla\source\repos\HomeworkDOTNET1\PrimeNumber\obj\Debug\PrimeNumber.pdb
