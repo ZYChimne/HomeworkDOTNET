@@ -21,7 +21,7 @@ namespace EratoSternMethod
         int[] arr = new int[100];
         public EratoSternMethod()
         {
-            for (int i = 1; i < 101; i++) arr[i - 1] = i;
+            for (int i = 1; i < 101; i++) arr[i - 1] = i;//Initialize an array [100] to be 1-100
             this.computePrime();
         }
 
@@ -31,7 +31,7 @@ namespace EratoSternMethod
             {
                 for(int j = i; j < 100; j++)
                 {
-                    if ((arr[j]!=0)&&(arr[j] % i == 0)) arr[j] = 0;
+                    if ((arr[j]!=0)&&(arr[j] % i == 0)) arr[j] = 0;//See if the numnber can be divided
 
                 }
             }
