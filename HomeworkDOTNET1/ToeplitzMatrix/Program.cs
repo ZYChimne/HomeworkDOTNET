@@ -14,6 +14,11 @@ namespace ToeplitzMatrix
             int height = 0, length=0;
             int[][] arr = new int[100][];
             Console.WriteLine("Type a matrix, and use EOI to mark the end.");
+            //Something like:
+            //1 2 3
+            //4 5 6
+            //7 8 9
+            //EOI
             for(int i = 0; i < 100; i++)
             {
                 string str = Console.ReadLine();
@@ -28,10 +33,10 @@ namespace ToeplitzMatrix
                     height++;
                     length = strArr.Length;
                 }
-            }
+            }//Reading the input and set it as a matrix.
             ToeplitzMatrix tm = new ToeplitzMatrix(arr, height, length);
             Console.WriteLine(tm.getState());
-            string stop = Console.ReadLine();
+            string stop = Console.ReadLine();//Force the conosle window not to exit
         }
     }
 
@@ -63,7 +68,7 @@ namespace ToeplitzMatrix
             {
                 for(int j = 1; j < length; j++)
                 {
-                    if (arr[i][j] != arr[i - 1][j - 1]) return;
+                    if (arr[i][j] != arr[i - 1][j - 1]) return;//if the diagonal element is not equal, return
                 }
             }
             isToeplitzMatrix = true;
