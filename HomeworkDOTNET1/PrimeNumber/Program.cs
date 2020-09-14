@@ -38,7 +38,7 @@ namespace PrimeNumber
             for(int i = 2; i <= temp; i++)
             {
                 if (temp % i == 0) al[cnt] = i;
-                while (temp % i == 0) temp = temp / i;
+                while (temp % i == 0) temp = temp / i;//Divide the number and store it into an array
                 cnt++;
             }
         }
