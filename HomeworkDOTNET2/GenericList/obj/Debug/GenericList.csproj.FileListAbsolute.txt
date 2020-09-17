@@ -1,0 +1,7 @@
+C:\Users\gazla\source\repos\HomeworkDOTNET2\GenericList\bin\Debug\GenericList.exe.config
+C:\Users\gazla\source\repos\HomeworkDOTNET2\GenericList\bin\Debug\GenericList.exe
+C:\Users\gazla\source\repos\HomeworkDOTNET2\GenericList\bin\Debug\GenericList.pdb
+C:\Users\gazla\source\repos\HomeworkDOTNET2\GenericList\obj\Debug\GenericList.csprojAssemblyReference.cache
+C:\Users\gazla\source\repos\HomeworkDOTNET2\GenericList\obj\Debug\GenericList.csproj.CoreCompileInputs.cache
+C:\Users\gazla\source\repos\HomeworkDOTNET2\GenericList\obj\Debug\GenericList.exe
+C:\Users\gazla\source\repos\HomeworkDOTNET2\GenericList\obj\Debug\GenericList.pdb

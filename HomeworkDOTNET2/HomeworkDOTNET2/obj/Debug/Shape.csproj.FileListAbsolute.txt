@@ -1,0 +1,7 @@
+C:\Users\gazla\source\repos\HomeworkDOTNET2\HomeworkDOTNET2\obj\Debug\Shape.csprojAssemblyReference.cache
+C:\Users\gazla\source\repos\HomeworkDOTNET2\HomeworkDOTNET2\obj\Debug\Shape.csproj.CoreCompileInputs.cache
+C:\Users\gazla\source\repos\HomeworkDOTNET2\HomeworkDOTNET2\bin\Debug\HomeworkDOTNET2.exe.config
+C:\Users\gazla\source\repos\HomeworkDOTNET2\HomeworkDOTNET2\bin\Debug\HomeworkDOTNET2.exe
+C:\Users\gazla\source\repos\HomeworkDOTNET2\HomeworkDOTNET2\bin\Debug\HomeworkDOTNET2.pdb
+C:\Users\gazla\source\repos\HomeworkDOTNET2\HomeworkDOTNET2\obj\Debug\HomeworkDOTNET2.exe
+C:\Users\gazla\source\repos\HomeworkDOTNET2\HomeworkDOTNET2\obj\Debug\HomeworkDOTNET2.pdb
