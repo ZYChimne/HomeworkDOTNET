@@ -1,7 +1,11 @@
-﻿using System;
+﻿using Lucene.Net.Search;
+using System;
+using System.CodeDom;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Linq.Expressions;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
@@ -53,16 +57,46 @@ namespace HomeworkDOTNET3
             Console.WriteLine("Order Not Found");
         }
 
-        public Order GetOrder(int id = -1, string goodsName = "", string client = "", double money = -1)
+        public List<Order> GetOrder(int id = -1, string goodsName = "", string client = "", double money = -1)
         {
-            //TODO
+            List<List<Order>> tempList = new List<List<Order>>();
+            List<Order> res = new List<Order>();
+            if (client != "")
+            {
+                List<Order> list = this.Query(o => o.Client == client);
+                tempList.Add(list);
+            }
             if (id != -1)
             {
-                var o = from order in Ol where order.Id == id select order;
-                if (o.Any()) return o.First();
-                else Console.WriteLine("Order Not Found");
+                List<Order> list = this.Query(o => o.Id == id);
+                tempList.Add(list);
             }
-            return null;
+            if (goodsName != "")
+            {
+                List<Order> list = this.Query(o => o.Client == client);
+                tempList.Add(list);
+            }
+            if (money != -1)
+            {
+                List<Order> list = this.Query(o => o.Money >= money);
+                tempList.Add(list);
+            }
+            if (tempList.Count == 0) return null;
+            foreach(Order o in tempList[0])
+            {
+                for(int i = 1; i < tempList.Count; i++)
+                {
+                    if (!tempList[i].Contains(o)) break;
+                    if (i == tempList.Count - 1) res.Add(o);
+                }
+            }
+            return res;
+        }
+
+        public List<Order> Query(Func<Order, bool> condition)
+        {
+            var query = Ol.Where(o => condition(o));
+            return query.ToList();
         }
 
         public void UpdateOrder(string client, List<ClientDemand> l)
@@ -88,6 +122,11 @@ namespace HomeworkDOTNET3
                 }
                 Console.WriteLine("Order Not Found");
             }
+        }
+
+        public void Sort(Comparison<Order> c)
+        {
+            Ol.Sort(c);
         }
 
         public string ToStringLong(string client)
@@ -119,20 +158,34 @@ namespace HomeworkDOTNET3
             return msg1;
         }
 
-        public void Export()
+        public void Export(string filename)
         {
             XmlSerializer xml = new XmlSerializer(typeof(List<Order>));
-            using (FileStream fs = new FileStream("Order.xml", FileMode.Create))
+            if (Path.GetExtension(filename) != "xml"){
+                filename = filename + ".xml";
+            }
+            using (FileStream fs = new FileStream(filename, FileMode.Create))
                 xml.Serialize(fs, Ol);
         }
 
-        public void Import()
+        public void Import(string filename)
         {
             XmlSerializer xml = new XmlSerializer(typeof(List<Order>));
-            using (FileStream fs = new FileStream("Order.xml", FileMode.Open))
+            if (Path.GetExtension(filename) != "xml")
             {
-                List<Order> olTemp = (List<Order>)xml.Deserialize(fs);
-                Ol = olTemp;
+                throw new ArgumentException("This is not a xml file");
+            }
+            try
+            {
+                using (FileStream fs = new FileStream(filename, FileMode.Open))
+                {
+                    List<Order> olTemp = (List<Order>)xml.Deserialize(fs);
+                    Ol = olTemp;
+                }
+            }
+            catch(Exception e)
+            {
+                throw new ApplicationException(e.ToString());
             }
         }
     }
