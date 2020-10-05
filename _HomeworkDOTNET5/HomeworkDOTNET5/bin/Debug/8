@@ -1,0 +1,397 @@
+﻿
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Welcome to IdentityServer4 &mdash; IdentityServer4 1.0.0 documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="_static/favicon.ico"/>
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="The Big Picture" href="intro/big_picture.html" /> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+
+<!-- RTD Extra Head -->
+
+<!-- 
+Always link to the latest version, as canonical.
+http://docs.readthedocs.org/en/latest/canonical.html
+-->
+<link rel="canonical" href="http://docs.identityserver.io/en/latest/" />
+
+<link rel="stylesheet" href="https://media.readthedocs.org/css/readthedocs-doc-embed.css" type="text/css" />
+
+<script type="text/javascript" src="_static/readthedocs-data.js"></script>
+
+<!-- Add page-specific data, which must exist in the page js, not global -->
+<script type="text/javascript">
+READTHEDOCS_DATA['page'] = 'index'
+READTHEDOCS_DATA['source_suffix'] = '.rst'
+</script>
+
+<script type="text/javascript" src="https://media.readthedocs.org/javascript/readthedocs-analytics.js"></script>
+
+<!-- end RTD <extrahead> -->
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="#" class="icon icon-home"> IdentityServer4
+          
+
+          
+          </a>
+
+          
+            
+            
+            
+              <div class="version">
+                release
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Introduction</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="intro/big_picture.html">The Big Picture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="intro/terminology.html">Terminology</a></li>
+<li class="toctree-l1"><a class="reference internal" href="intro/specs.html">Supported Specifications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="intro/packaging.html">Packaging and Builds</a></li>
+<li class="toctree-l1"><a class="reference internal" href="intro/support.html">Support and Consulting Options</a></li>
+<li class="toctree-l1"><a class="reference internal" href="intro/test.html">Demo Server and Tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="intro/contributing.html">Contributing</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Quickstarts</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="quickstarts/0_overview.html">Setup and Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quickstarts/1_client_credentials.html">Protecting an API using Client Credentials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quickstarts/2_resource_owner_passwords.html">Protecting an API using Passwords</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quickstarts/3_interactive_login.html">Adding User Authentication with OpenID Connect</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quickstarts/4_external_authentication.html">Adding Support for External Authentication</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quickstarts/5_hybrid_and_api_access.html">Switching to Hybrid Flow and adding API Access back</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quickstarts/6_aspnet_identity.html">Using ASP.NET Core Identity</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quickstarts/7_javascript_client.html">Adding a JavaScript client</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quickstarts/8_entity_framework.html">Using EntityFramework Core for configuration and operational data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quickstarts/community.html">Community quickstarts &amp; samples</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Topics</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="topics/startup.html">Startup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="topics/resources.html">Defining Resources</a></li>
+<li class="toctree-l1"><a class="reference internal" href="topics/clients.html">Defining Clients</a></li>
+<li class="toctree-l1"><a class="reference internal" href="topics/signin.html">Sign-in</a></li>
+<li class="toctree-l1"><a class="reference internal" href="topics/signin_external_providers.html">Sign-in with External Identity Providers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="topics/windows.html">Windows Authentication</a></li>
+<li class="toctree-l1"><a class="reference internal" href="topics/signout.html">Sign-out</a></li>
+<li class="toctree-l1"><a class="reference internal" href="topics/signout_external_providers.html">Sign-out of External Identity Providers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="topics/signout_federated.html">Federated Sign-out</a></li>
+<li class="toctree-l1"><a class="reference internal" href="topics/federation_gateway.html">Federation Gateway</a></li>
+<li class="toctree-l1"><a class="reference internal" href="topics/consent.html">Consent</a></li>
+<li class="toctree-l1"><a class="reference internal" href="topics/apis.html">Protecting APIs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="topics/deployment.html">Deployment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="topics/logging.html">Logging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="topics/events.html">Events</a></li>
+<li class="toctree-l1"><a class="reference internal" href="topics/crypto.html">Cryptography, Keys and HTTPS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="topics/grant_types.html">Grant Types</a></li>
+<li class="toctree-l1"><a class="reference internal" href="topics/secrets.html">Secrets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="topics/extension_grants.html">Extension Grants</a></li>
+<li class="toctree-l1"><a class="reference internal" href="topics/resource_owner.html">Resource Owner Password Validation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="topics/refresh_tokens.html">Refresh Tokens</a></li>
+<li class="toctree-l1"><a class="reference internal" href="topics/reference_tokens.html">Reference Tokens</a></li>
+<li class="toctree-l1"><a class="reference internal" href="topics/cors.html">CORS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="topics/discovery.html">Discovery</a></li>
+<li class="toctree-l1"><a class="reference internal" href="topics/add_apis.html">Adding more API Endpoints</a></li>
+<li class="toctree-l1"><a class="reference internal" href="topics/add_protocols.html">Adding new Protocols</a></li>
+<li class="toctree-l1"><a class="reference internal" href="topics/tools.html">Tools</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Endpoints</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="endpoints/discovery.html">Discovery Endpoint</a></li>
+<li class="toctree-l1"><a class="reference internal" href="endpoints/authorize.html">Authorize Endpoint</a></li>
+<li class="toctree-l1"><a class="reference internal" href="endpoints/token.html">Token Endpoint</a></li>
+<li class="toctree-l1"><a class="reference internal" href="endpoints/userinfo.html">UserInfo Endpoint</a></li>
+<li class="toctree-l1"><a class="reference internal" href="endpoints/device_authorization.html">Device Authorization Endpoint</a></li>
+<li class="toctree-l1"><a class="reference internal" href="endpoints/introspection.html">Introspection Endpoint</a></li>
+<li class="toctree-l1"><a class="reference internal" href="endpoints/revocation.html">Revocation Endpoint</a></li>
+<li class="toctree-l1"><a class="reference internal" href="endpoints/endsession.html">End Session Endpoint</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="reference/identity_resource.html">Identity Resource</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reference/api_resource.html">API Resource</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reference/client.html">Client</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reference/grant_validation_result.html">GrantValidationResult</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reference/profileservice.html">Profile Service</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reference/interactionservice.html">IdentityServer Interaction Service</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reference/deviceflow_interactionservice.html">Device Flow Interaction Service</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reference/options.html">IdentityServer Options</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reference/ef.html">Entity Framework Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reference/aspnet_identity.html">ASP.NET Identity Support</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Misc</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="misc/training.html">Training</a></li>
+<li class="toctree-l1"><a class="reference internal" href="misc/blogs.html">Blog posts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="misc/videos.html">Videos</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="#">IdentityServer4</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="#">Docs</a> &raquo;</li>
+        
+      <li>Welcome to IdentityServer4</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            
+              <a href="https://github.com/IdentityServer/IdentityServer4/blob/release/docs/index.rst" class="fa fa-github"> Edit on GitHub</a>
+            
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="welcome-to-identityserver4">
+<h1>Welcome to IdentityServer4<a class="headerlink" href="#welcome-to-identityserver4" title="Permalink to this headline">¶</a></h1>
+<img alt="_images/logo.png" class="align-center" src="_images/logo.png" />
+<p>IdentityServer4 is an OpenID Connect and OAuth 2.0 framework for ASP.NET Core 2.</p>
+<p>It enables the following features in your applications:</p>
+<ul class="simple">
+<li><strong>Authentication as a Service:</strong> Centralized login logic and workflow for all of your applications (web, native, mobile, services). IdentityServer is an officially <a class="reference external" href="https://openid.net/certification/">certified</a> implementation of OpenID Connect.</li>
+<li><strong>Single Sign-on / Sign-out:</strong> Single sign-on (and out) over multiple application types.</li>
+<li><strong>Access Control for APIs:</strong> Issue access tokens for APIs for various types of clients, e.g. server to server, web applications, SPAs and native/mobile apps.</li>
+<li><strong>Federation Gateway:</strong> Support for external identity providers like Azure Active Directory, Google, Facebook etc. This shields your applications from the details of how to connect to these external providers.</li>
+<li><strong>Focus on Customization:</strong> The most important part - many aspects of IdentityServer can be customized to fit <strong>your</strong> needs. Since IdentityServer is a framework and not a boxed product or a SaaS, you can write code to adapt the system the way it makes sense for your scenarios.</li>
+<li><strong>Mature Open Source:</strong> IdentityServer uses the permissive <a class="reference external" href="https://www.apache.org/licenses/LICENSE-2.0">Apache 2</a> license that allows building commercial products on top of it. It is also part of the <a class="reference external" href="https://dotnetfoundation.org/">.NET Foundation</a> which provides governance and legal backing.</li>
+<li><strong>Free and Commercial Support:</strong> If you need help building or running your identity platform, <a class="reference internal" href="intro/support.html#refsupport"><span class="std std-ref">let us know</span></a>. There are several ways we can help you out.</li>
+</ul>
+<div class="toctree-wrapper compound">
+</div>
+<div class="toctree-wrapper compound">
+</div>
+<div class="toctree-wrapper compound">
+</div>
+<div class="toctree-wrapper compound">
+</div>
+<div class="toctree-wrapper compound">
+</div>
+<div class="toctree-wrapper compound">
+</div>
+<div class="toctree-wrapper compound">
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="intro/big_picture.html" class="btn btn-neutral float-right" title="The Big Picture" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, Brock Allen &amp; Dominick Baier
+      
+        <span class="commit">
+          Revision <code>3881a3ad</code>.
+        </span>
+      
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      <span class="fa fa-book"> Read the Docs</span>
+      v: release
+      <span class="fa fa-caret-down"></span>
+    </span>
+    <div class="rst-other-versions">
+      <dl>
+        <dt>Versions</dt>
+        
+          <dd><a href="/en/latest/">latest</a></dd>
+        
+          <dd><a href="/en/updatedqs/">updatedqs</a></dd>
+        
+          <dd><a href="/en/release/">release</a></dd>
+        
+          <dd><a href="/en/dev/">dev</a></dd>
+        
+          <dd><a href="/en/aspnetcore1/">aspnetcore1</a></dd>
+        
+      </dl>
+      <dl>
+        <dt>Downloads</dt>
+        
+          <dd><a href="//readthedocs.org/projects/identityserver4/downloads/pdf/release/">pdf</a></dd>
+        
+          <dd><a href="//readthedocs.org/projects/identityserver4/downloads/htmlzip/release/">htmlzip</a></dd>
+        
+          <dd><a href="//readthedocs.org/projects/identityserver4/downloads/epub/release/">epub</a></dd>
+        
+      </dl>
+      <dl>
+        <dt>On Read the Docs</dt>
+          <dd>
+            <a href="//readthedocs.org/projects/identityserver4/?fromdocs=identityserver4">Project Home</a>
+          </dd>
+          <dd>
+            <a href="//readthedocs.org/builds/identityserver4/?fromdocs=identityserver4">Builds</a>
+          </dd>
+      </dl>
+      <hr/>
+      Free document hosting provided by <a href="http://www.readthedocs.org">Read the Docs</a>.
+
+    </div>
+  </div>
+
+
+
+  
+
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-2.0.3.min.js"></script>
+        <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-migrate-1.2.1.min.js"></script>
+        <script type="text/javascript" src="https://media.readthedocs.org/javascript/underscore.js"></script>
+        <script type="text/javascript" src="https://media.readthedocs.org/javascript/doctools.js"></script>
+        <script type="text/javascript" src="https://media.readthedocs.org/javascript/readthedocs-doc-embed.js"></script>
+    
+
+  
+
+  <script type="text/javascript" src="_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

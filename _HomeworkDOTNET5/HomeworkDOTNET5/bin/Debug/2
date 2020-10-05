@@ -1,0 +1,955 @@
+﻿<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="referrer" content="origin" />
+    <meta name="description" content="前言 我们现在日常生活中，会使用各式各样的应用程序，层出不穷，其中有基于网页浏览方式的应用，有基于手机端的App，甚至有基于流行的公众号和小程序等等，这些应用，我们不仅要实现各个应用的功能之外，还要考" />
+    <meta property="og:description" content="前言 我们现在日常生活中，会使用各式各样的应用程序，层出不穷，其中有基于网页浏览方式的应用，有基于手机端的App，甚至有基于流行的公众号和小程序等等，这些应用，我们不仅要实现各个应用的功能之外，还要考" />
+    <meta http-equiv="Cache-Control" content="no-transform" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>IdentityServer4系列 | 初识基础知识点 - 艾三元 - 开发者的网上家园</title>
+    <link id="favicon" rel="shortcut icon" href="//common.cnblogs.com/favicon.svg" type="image/svg+xml" />
+    
+    <link rel="stylesheet" href="/css/blog-common.min.css?v=dktCmaTYc_s0a4EnvC6tuH5wYElIJN_131iOybZOKro" />
+    
+    <link type="text/css" rel="stylesheet" href="https://www.cnblogs.com/i3yuan/custom.css?v=Gf/fTgSPToHErZ5nNKB/w7Z&#x2B;Te0=" />
+    <link id="mobile-style" media="only screen and (max-width: 767px)" type="text/css" rel="stylesheet" href="/skins/bluesky/bundle-bluesky-mobile.min.css?v=w2Rgaiz5pwMvQiaI018cDsOEsicdDhpRf-p561XUG6Q" />
+    
+    <link type="application/rss+xml" rel="alternate" href="https://www.cnblogs.com/i3yuan/rss" />
+    <link type="application/rsd+xml" rel="EditURI" href="https://www.cnblogs.com/i3yuan/rsd.xml" />
+    <link type="application/wlwmanifest+xml" rel="wlwmanifest" href="https://www.cnblogs.com/i3yuan/wlwmanifest.xml" />
+    <script>
+        var currentBlogId = 485408;
+        var currentBlogApp = 'i3yuan';
+        var cb_enable_mathjax = false;
+        var isLogined = false;
+        var isBlogOwner = false;
+        var skinName = 'BlueSky';
+        var visitorUserId = '';
+    </script>
+        <script>
+            var currentPostDateAdded = '2020-10-05 08:01';
+        </script>
+    <script src="https://common.cnblogs.com/scripts/jquery-2.2.0.min.js"></script>
+    <script src="/js/blog-common.min.js?v=quLP6V96NCUwrp9e9p4Tc3ZzspjwpbJyGVOAQHoms5M"></script>
+    
+    
+    
+</head>
+<body>
+    <a name="top"></a>
+    <div id="top_nav" class="navbar navbar-custom">
+        <nav id="nav_main" class="navbar-main">
+            <ul id="nav_left" class="navbar-list navbar-left">
+                <li class="navbar-branding">
+                    <a href="https://www.cnblogs.com/" title="开发者的网上家园"><img src="/images/logo.svg?v=R9M0WmLAIPVydmdzE2keuvnjl-bPR7_35oHqtiBzGsM" alt="博客园Logo" /></a>
+                </li>
+                <li><a href="/" onclick="ga('send', 'event', 'Link', 'click', 'skin-navbar-sitehome')">首页</a></li>
+                <li><a href="https://news.cnblogs.com/" onclick="ga('send', 'event', 'Link', 'click', 'skin-navbar-news')">新闻</a></li>
+                <li><a href="https://q.cnblogs.com/" onclick="ga('send', 'event', 'Link', 'click', 'skin-navbar-q')">博问</a></li>
+                <li><a id="nav_brandzone" href="https://brands.cnblogs.com/" onclick="ga('send', 'event', 'Link', 'click', 'skin-navbar-brands')">专区</a></li>
+                <li><a href="https://ing.cnblogs.com/" onclick="ga('send', 'event', 'Link', 'click', 'skin-navbar-ing')">闪存</a></li>
+                <li><a href="https://edu.cnblogs.com/" onclick="ga('send', 'event', 'Link', 'click', 'skin-navbar-edu')">班级</a></li>
+            </ul>
+            <ul id="nav_right" class="navbar-list navbar-right">
+                <li>
+                    <form id="zzk_search" class="navbar-search" action="https://zzk.cnblogs.com/s" method="get">
+                        <input name="w" id="zzk_search_input" placeholder="代码改变世界" type="text" tabindex="3" />
+                        <button type="submit" id="zzk_search_button">
+                            <img src="/images/aggsite/search.svg" alt="搜索" />
+                        </button>
+                    </form>
+                </li>
+                <li id="navbar_login_status" class="navbar-list">
+                    <a id="navblog-myblog-icon" class="navbar-user-info navbar-blog" href="https://passport.cnblogs.com/GetBlogApplyStatus.aspx" alt="我的博客" title="我的博客">
+                        <img id="myblog_icon" class="navbar-icon" src="/images/aggsite/myblog.svg" alt="我的博客" />
+                    </a>
+                    <a class="navbar-user-info navbar-message navbar-icon-wrapper" href="https://msg.cnblogs.com/" alt="短消息" title="短消息">
+                        <img id="msg_icon" class="navbar-icon" src="/images/aggsite/message.svg?v=oS4PkibyMjZ9rGD5XAcLt99uW_s76Javy2up4dbnZNY" alt="短消息" />
+                        <span id="msg_count" style="display: none"></span>
+                    </a>
+                    <div id="user_info" class="navbar-user-info dropdown">
+                        <a class="dropdown-button" href="https://home.cnblogs.com/">
+                            <img id="user_icon" class="navbar-avatar" src="/images/aggsite/avatar-default.svg" alt="用户头像" />
+                        </a>
+                        <div class="dropdown-menu">
+                            <a id="navblog-myblog-text" href="https://passport.cnblogs.com/GetBlogApplyStatus.aspx">我的博客</a>
+                            <a href="https://home.cnblogs.com/">我的园子</a>
+                            <a href="https://account.cnblogs.com/settings/account">账号设置</a>
+                            <a href="javascript:void(0)" onclick="logout();">退出登录</a>
+                        </div>
+                    </div>
+                    <a class="navbar-anonymous" href="https://account.cnblogs.com/signup/">注册</a>
+                    <a class="navbar-anonymous" href="https://account.cnblogs.com/signin/?returnUrl=https://www.cnblogs.com/">登录</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+    <div id="page_begin_html">
+        <div id="pageBeginBar">
+    <div id="pageBeginTitle">
+    <a href="https://www.cnblogs.com/i3yuan">艾三元</a>
+    <span>Every day to be a little better</span>
+    <div class="clear"></div>
+    </div>
+   <!-- <a class="github" href="https://github.com/Goal-developer" target="_blank">
+<img width="149" height="149" src="https://images.cnblogs.com/cnblogs_com/i3yuan/1381525/o_github.png" class="attachment-full size-full" alt="Fork me on GitHub" data-recalc-dims="1"> -->
+    </a>
+</div>
+<style>
+.loading {
+    position: fixed;
+    top: 0;
+    z-index: 999;
+    height: 100%;
+    width: 100%;
+    text-align: center;
+    background: #ffffff;
+    font-size: 18px;
+   visibility: hidden;
+   opacity: 0;
+   -webkit-animation: loading 3s linear; 
+ }
+ .loading img {
+   width:50%;
+    height: 100%;
+margin:auto
+ }
+ @-webkit-keyframes loading {
+   0%{opacity: 1;visibility: visible;}
+   20%{opacity: 0.8;}
+  40%{opacity: 0.6;}
+  60%{opacity: 0.4;}
+ 80%{opacity: 0.2;}
+   100%{opacity: 0;visibility: visible;} 
+ }
+</style>
+    </div>
+    
+<!--done-->
+<div id="home">
+<div id="header">
+	<div id="blogTitle">
+        <a id="lnkBlogLogo" href="https://www.cnblogs.com/i3yuan/"><img id="blogLogo" src="/skins/custom/images/logo.gif" alt="返回主页" /></a>		
+		
+<!--done-->
+<h1><a id="Header1_HeaderTitle" class="headermaintitle HeaderMainTitle" href="https://www.cnblogs.com/i3yuan/"></a>
+</h1>
+<h2>
+
+</h2>
+
+
+
+
+		
+	</div><!--end: blogTitle 博客的标题和副标题 -->
+	<div id="navigator">
+		
+<ul id="navList">
+<li><a id="blog_nav_sitehome" class="menu" href="https://www.cnblogs.com/">
+博客园</a>
+</li>
+<li>
+<a id="blog_nav_myhome" class="menu" href="https://www.cnblogs.com/i3yuan/">
+首页</a>
+</li>
+<li>
+
+<a id="blog_nav_newpost" class="menu" href="https://i.cnblogs.com/EditPosts.aspx?opt=1">
+新随笔</a>
+</li>
+<li>
+<a id="blog_nav_contact" class="menu" href="https://msg.cnblogs.com/send/%E8%89%BE%E4%B8%89%E5%85%83">
+联系</a></li>
+<li>
+<a id="blog_nav_rss" class="menu" href="javascript:void(0)" data-rss="https://www.cnblogs.com/i3yuan/rss/">
+订阅</a>
+<!--<partial name="./Shared/_XmlLink.cshtml" model="Model" /></li>--></li>
+<li>
+<a id="blog_nav_admin" class="menu" href="https://i.cnblogs.com/">
+管理</a>
+</li>
+</ul>
+
+
+		<div class="blogStats">
+			
+			<span id="stats_post_count">随笔 - 
+42&nbsp; </span>
+<span id="stats_article_count">文章 - 
+0&nbsp; </span>
+<span id="stats-comment_count">评论 - 
+112</span>
+
+			
+		</div><!--end: blogStats -->
+	</div><!--end: navigator 博客导航栏 -->
+</div><!--end: header 头部 -->
+
+<div id="main">
+	<div id="mainContent">
+	<div class="forFlow">
+		<div id="post_detail">
+    <!--done-->
+    <div id="topics">
+        <div class="post">
+            <h1 class = "postTitle">
+                
+<a id="cb_post_title_url" class="postTitle2 vertical-middle" href="https://www.cnblogs.com/i3yuan/p/13768815.html">
+    <span>IdentityServer4系列 | 初识基础知识点</span>
+    
+
+
+</a>
+
+            </h1>
+            <div class="clear"></div>
+            <div class="postBody">
+                
+<div id="cnblogs_post_body" class="blogpost-body cnblogs-markdown">
+    <h1 id="前言">前言</h1>
+<p>我们现在日常生活中，会使用各式各样的应用程序，层出不穷，其中有基于网页浏览方式的应用，有基于手机端的App，甚至有基于流行的公众号和小程序等等，这些应用，我们不仅要实现各个应用的功能之外，还要考虑各个应用之间的交互作用，其中身份的认证和授权就是每个应用必不可少的的一部分。</p>
+<p>所以我们以身份认证和授权这一部分为例，需要考虑各个应用直接的交互，统一管理以及信息安全问题。</p>
+<p>而现在的互联网，对于信息安全要求又十分苛刻，所以一套统一的身份认证和授权就至关重要。</p>
+<p><img src="https://img2020.cnblogs.com/blog/1576550/202010/1576550-20201004231601497-1611168987.png" alt="" loading="lazy"></p>
+<p>所以，我们可以根据<code>Identity Server4</code>框架开发一套统一的身份认证和授权项目应用在平时的多个项目中，实现多平台应用授权统一管理。</p>
+<h1 id="说明">说明</h1>
+<p><img src="https://img2020.cnblogs.com/blog/1576550/202010/1576550-20201004231430447-1977709387.png" alt="" loading="lazy"></p>
+<p>我们通过查看 <a href="https://identityserver4.readthedocs.io/en/latest/">IdentityServer4</a>官网，就可以看到给出的定义：</p>
+<pre><code class="language-markdown">IdentityServer4 is an OpenID Connect and OAuth 2.0 framework for ASP.NET Core.
+</code></pre>
+<blockquote>
+<p>OpenID Connect + OAuth2.0 相结合的认证框架</p>
+</blockquote>
+<p>由此可见，IdentityServer是基于OpenID Connect协议标准的身份认证和授权程序，实现了OpenID Connect和OAuth2.0协议的结合。</p>
+<p>所以，IdentityServer4是为ASP.NET CORE量身定制的实现了OpenId Connect和OAuth2.0协议的认证授权中间件。通常，你构建（或重新使用）包含登录和注销页面的应用程序，IdentityServer中间件会向其添加必要的协议头，以便客户端应用程序可以使用这些标准协议与其对话。</p>
+<p><img src="https://img2020.cnblogs.com/blog/1576550/202010/1576550-20201004231555497-1513467258.png" alt="" loading="lazy"></p>
+<h2 id="21-特性">2.1 特性</h2>
+<p><img src="https://img2020.cnblogs.com/blog/1576550/202010/1576550-20201004231504842-1237811853.png" alt="" loading="lazy"></p>
+<p>通过不同的文献使用的术语我们会发现，同一个概念可能存在着多种解释，比如有些把他称为安全令牌服务（Security Token Service），<br>
+身份提供（Identity Provider），授权服务器（Authorization Server），IP-STS 等等。其实他们都是一个意思，目的都是在软件应用中为客户端颁发令牌并用于安全访问的。</p>
+<h2 id="22-功能">2.2 功能</h2>
+<p><img src="https://img2020.cnblogs.com/blog/1576550/202010/1576550-20201004231511802-2052102664.png" alt="" loading="lazy"></p>
+<h1 id="引申">引申</h1>
+<h2 id="31-oauth20">3.1 OAuth2.0</h2>
+<p><strong>OAuth2.0</strong> 是OAuth协议的延续，<strong>OAuth2.0</strong> 关注客户端开发者的简易性，为用户资源提供一个安全的、开放而有建议的标准。是目前流行的授权机制，用于授权第三方应用就可以获取该用户资源。因此OAuth是安全的。</p>
+<p>为了安全，Oauth2.0 引入了两个措施：</p>
+<blockquote>
+<p>　　1，Oauth2.0 要求，refresh token 一定是保存在客户端的服务器上的，而绝不能存放在狭义的客户端（例如移动 app、PC端软件） 上。调用 refresh 接口的时候，一定是从服务器到服务器的访问；</p>
+<p>　　2，Oauth2.0 引入了 client_secret 机制。即每一个 client_id 都对应一个 client_secret。这个 client_secret 会在客户端申请 client_id 时，随 client_id 一起分配给客户端。客户端必须把 client_secret 妥善保管在服务器上，决不能泄露。刷新 access token 时，需要验证这个 client_secret。</p>
+</blockquote>
+<h3 id="311-场景">3.1.1 场景</h3>
+<p><strong>OAuth2.0</strong> 是目前最流行的授权机制，用来授权第三方应用，获取用户数据。</p>
+<p>（以下以 第三方A网站用户访问授权获取在B网站资源 为例 。参考：<a href="http://www.ruanyifeng.com/blog/2014/05/oauth_2_0.html">理解OAuth 2.0</a>）</p>
+<p>为了让A网站应用访问在B网站上的存储的照片、视频或者联系方式等等私密资源，我们可能需要做到的就是让B网站同意A网站访问读取这些资源，那么，在传统的方式中，会将自己在B网站中的用户名和密码告诉A，后者就可以读取用户的资源信息了，但是这样做存在了严重的问题：</p>
+<ul>
+<li>A网站为了后续服务，会保存用户的密码，这样不安全。</li>
+<li>B网站必须部署密码登录方式，才能以此方式获取，但这种单纯的密码登录也不安全。</li>
+<li>A网站用户获取某个网站资源的权力，但却没有限制获取的范围和期限。</li>
+<li>当用户修改密码的时候，就会收回A网站的权力，但是这样做，会使得其他所有获得用户授权的A应用程序全部失效。</li>
+<li>只要有一个A应用程序被破解，就会导致用户密码泄漏，以及所有被密码保护的数据泄漏。</li>
+</ul>
+<p>因此，这种方式是不安全的，所以为了解决这种问题，<strong>OAuth</strong>就解决了这种问题。</p>
+<p>允许用户让第三方A应用访问该用户在B网站上存储的私密的资源（如照片，视频，联系人列表），而无需将用户名和密码提供给第三方应用。就比如我用QQ登录博客园，那博客园（第三方应用）的昵称就可以是我的QQ（某网站）昵称，它获取到了我的QQ昵称，并存到了博客园的数据库，我以后就一直可以使用QQ来登录博客园，但是博客园却不知道我QQ的用户名和密码。</p>
+<h3 id="312-说明">3.1.2 说明</h3>
+<p>OAuth在"客户端"与"服务提供商"之间，设置了一个授权层（authorization layer）。"客户端"不能直接登录"服务提供商"，只能登录授权层，以此将用户与客户端区分开来。"客户端"登录授权层所用的令牌（token），与用户的密码不同。用户可以在登录的时候，指定授权层令牌的权限范围和有效期。</p>
+<p>"客户端"登录授权层以后，"服务提供商"根据令牌的权限范围和有效期，向"客户端"开放用户储存的资料。</p>
+<p><img src="https://img2020.cnblogs.com/blog/1576550/202010/1576550-20201004232147717-129403731.jpg" alt="" loading="lazy"></p>
+<p>（A）用户打开客户端以后，客户端要求用户给予授权。<br>
+（B）用户同意给予客户端授权。<br>
+（C）客户端使用上一步获得的授权，向认证服务器申请令牌。<br>
+（D）认证服务器对客户端进行认证以后，确认无误，同意发放令牌。<br>
+（E）客户端使用令牌，向资源服务器申请获取资源。<br>
+（F）资源服务器确认令牌无误，同意向客户端开放资源。</p>
+<h3 id="313-模式">3.1.3 模式</h3>
+<p>用户怎样实现客户端授权，所以需要通过不同的授权模式让客户端可以获取令牌，进而获取资源。因此，客户端获取授权常用的模式如下：</p>
+<p><img src="https://img2020.cnblogs.com/blog/1576550/202010/1576550-20201004231517808-917889351.png" alt="" loading="lazy"></p>
+<blockquote>
+<p><strong>后续篇章会对这些模式进行说明和搭建应用项目。</strong></p>
+</blockquote>
+<h2 id="32-openid-connect">3.2 OpenID Connect</h2>
+<p>OpenID Connect是基于OAuth 2.0规范族的可互操作的身份验证协议。它使用简单的REST / JSON消息流来实现，和之前任何一种身份认证协议相比，开发者可以轻松集成。</p>
+<p>OpenID Connect允许开发者验证跨网站和应用的用户，而无需拥有和管理密码文件。</p>
+<p>OpenID Connect允许所有类型的客户,包括基于浏览器的<a href="https://link.jianshu.com?t=http://lib.csdn.net/base/javascript">JavaScript</a>和本机移动应用程序,启动登录流动和接收可验证断言对登录用户的身份。</p>
+<p>进一步来说：</p>
+<ul>
+<li>OpenID Connect是OAuth 2.0协议之上的简单身份层，用 API 进行身份交互的框架，允许<strong>客户端根据授权服务器的认证结果最终确认用户的身份，以及获取基本的用户信息</strong>；</li>
+<li>它支持包括Web、移动、JavaScript在内的所有客户端类型；</li>
+<li>它是可扩展的协议，允许你使用某些可选功能，如身份数据加密、OpenID提供商发现、会话管理；</li>
+</ul>
+<p>OpenID Connect vs OpenID 2.0：OpenID Connect完成很多与OpenID 2.0（即认证，对用户的身份进行认证，判断其身份是否有效）相同的任务，是API-friendly，定义了可选的签名和加密的机制；</p>
+<p>OAuth 1.0和OpenID 2.0的集成需要扩展，而OpenID Connect协议本身就建立在OAuth 2.0之上。</p>
+<blockquote>
+<p>(身份验证)+ OAuth 2.0 = OpenID Connect</p>
+</blockquote>
+<p>因此，<strong>OpenID Connect 是“认证”和“授权”的结合。</strong></p>
+<p><img src="https://img2020.cnblogs.com/blog/1576550/202010/1576550-20201004231540827-279634019.png" alt="" loading="lazy"></p>
+<blockquote>
+<p><strong>我们经常会混淆OpenID和OAuth协议之间的关系，下文会对这两者进行区分说明。</strong></p>
+</blockquote>
+<p><strong>为什么开发者要使用OpenID Connect？</strong></p>
+<blockquote>
+<p>因为它很简单,可靠,安全,并让他们摆脱困难和危险的存储和管理别人的密码。也有好处,它让用户的生活更容易在网站注册和注册从而减少遗弃。</p>
+</blockquote>
+<h1 id="区别">区别</h1>
+<h2 id="41-oauth-与-openid">4.1 OAuth 与 OpenID</h2>
+<p>首先，来认识两个英文单词，也是我们在平时中很容易混淆的。</p>
+<ul>
+<li><strong>authorization</strong> : n. 授权，认可；批准，委任。</li>
+<li><strong>authentication</strong> : n. 证明；鉴定；证实。</li>
+</ul>
+<p>而在认证授权服务中，也应用了这两个单词的表面意思。</p>
+<blockquote>
+<p>OpenID 是一个<strong>以用户为中心的数字身份识别框架</strong>，它具有开放、分散性。OpenID 的创建基于这样一个概念：我们可以通过 URI （又叫 URL 或网站地址）来认证一个网站的唯一身份，同理，我们也可以通过这种方式来作为用户的身份认证。</p>
+</blockquote>
+<p><strong>OpenID ：</strong> 是<em>Authentication</em>，即认证，对用户的身份进行认证，判断其身份是否有效，也就是让网站知道“你是你所声称的那个用户”。</p>
+<blockquote>
+<p>侧重的是authentication： 即证明 “用户是谁？”</p>
+</blockquote>
+<p><strong>OAuth ：</strong> 是<em>Authorization</em>，即授权，在已知用户身份合法的情况下，经用户授权来允许某些操作，也就是让网站知道“你能被允许做那些事情”。</p>
+<blockquote>
+<p>侧重的是authorization ：即授权 “用户能做什么？”</p>
+</blockquote>
+<p>由此可知，授权要在认证之后进行，只有确定用户身份只有才能授权。</p>
+<h3 id="411-场景">4.1.1 场景</h3>
+<p><strong>OpenID</strong> 是证实身份（Authentication）作用的，就好比我们参加大型考试一下，进考场的时候，监考官需要我们拿出身份证和准考证来检验，比对是否是同一个人。这个过程就是在验证 “身份，这就是我”，同时也证实了这不是一个匿名伪造的不可信任信息。考官比对身份成功后，就会进一步询问。</p>
+<blockquote>
+<p>比如我用 Google 的 OpenID 服务登录 xxx.com ， xxx.com 先把我导向 Google 的授权页面，我使用 Google 帐号 test@gmail.com 登录并同意后，页面跳回 xxx.com ， xxx.com 拿到了我的“唯一标识”，这个唯一标识可能是 abbcccxxxxxxxddccddxxxx11 ，xxx.com 从这个字符串里无法获得任何 xxx@gmail.com 的个人信息（甚至连邮箱地址也不知道）， xxx.com 只知道以后只要使用谷歌登录并返回 abbcccxxxxxxxddccddxxxx11 这个标识符，那就是我在登录。</p>
+</blockquote>
+<p><strong>但是如果你想在认证过程中获得用户的其他信息（比如手机号等 ）就得多做一步了。</strong></p>
+<p><strong>OAuth</strong> 是关于授权、许可（Authorization）的，当考官看完比对你的身份后，还要求掏出兜里的东西，拿出随身携带里的东西、手机等随身物品以便检查，检查你是否携带考场违规物品，这时就需要得到被检查人的许可才行，被检查人有权利扭头就走，但要想进场考试，必须给予许可、配合检查。这是在回答「我同意让你对我进一步做些什么」，是为了在被授予权限的前提下，更多的获取除了个人信息以外，身上携带的东西是否包含违规物品。（如：手机，计算器，手表，非指定文具等）</p>
+<blockquote>
+<p>我想通过微博登录 xxx.com ，xxx.com 要先把我 redirect 到新浪微博的授权页面，我通过微博帐号登录并授权后，页面跳回 xxx.com ，xxx.com 拿到我的访问 token 后还要再调用一个接口来获得我的会员 UID ，这个 UID 就是新浪用户的“唯一标识”了。</p>
+</blockquote>
+<pre><code class="language-markdown">  # 借鉴网友的说明： 
+   如今越来越多的网站，以及一些应用程序都开始使用第三方社交平台账户登录，那这里就会涉及到安全性的问题，隐私的问题，你不能随意来获取我的资料，当然你来使用我的资料，你要经过用户的同意，那这个用户是不是我平台上，还是要来向我求证，那在这个过程中，实际上就出现了两个过程，我们还是直接使用上次的例子来说明，比较直观，博客园使用QQ登录，进入博客园的登录页，点击使用QQ登录：
+
+    在进入到QQ登录界面后，最开始是要请求认证，用户输入QQ号和密码，点击登录，腾讯互联会先进行验证该用户是否为我的用户，如果是我的用户，那么我会通知你（博客园），他是我的用户，你可以使用该账户登录你的系统，这个过程就是认证（Authentication），认证就是证明你是谁，你是否是真实存在的，就好像，快递员来给你送快递，让你出示你的身份证，他确定你是本人后，把快递给你，这就是OpenID。
+
+   而在QQ授权登录下方，有两给CheckBox复选框，可以允许博客园获得您的昵称、头像、性别，这是在认证之后的事了，在腾讯互联你是我平台的用户后，你可以自己选择博客园是否有权去获取你的相关信息，当你勾选后，腾讯互联就把你的这些基本信息给了博客园，这个过程就是授权（Authorization），授权就是确定了你是谁后，又把属于你的东西给了别人，犹如你向快递员出示了身份证，然后你又把你房门的密码给了他，并告诉他说，我把房门密码给你，你帮我放到我客厅里吧。
+</code></pre>
+<p><img src="https://img2020.cnblogs.com/blog/1576550/202010/1576550-20201004231533322-1182520118.png" alt="" loading="lazy"></p>
+<p>可以看出，<strong>OAuth 相对于 OpenID 最大的区别就是</strong>，网站在认证授权的过程中实际上是拿到了你的帐户访问权限继而确认你的身份，但是这同时也存在一个安全隐患，因为网站在拿到你的“唯一标识”的同时还拿到了一把你的账户的 “临时钥匙”。但是你不知道网站会不会拿这把钥匙“干坏事”，这个只有站长心里清楚。同时 OAuth 还比 OpenID 多了几个额外的请求步骤，登录所费时间一定是长于 OpenID 的。</p>
+<h2 id="42--oauth、openid-与-openid-connect">4.2  OAuth、OpenID 与 OpenID Connect</h2>
+<p><img src="https://img2020.cnblogs.com/blog/1576550/202010/1576550-20201004231450112-1259674324.png" alt="" loading="lazy"></p>
+<p><strong>OpenID Connect</strong> 因为其基于<em>OAuth</em>协议（可以看上文OAuth说明），所以<em>OpenID-Connect</em>协议中也包含了<strong>client_id</strong>、<strong>client_secret</strong>还有<strong>redirect_uri</strong>等字段标识。这些信息被保存在“身份认证服务器”，以确保特定的客户端收到的信息只来自于合法的应用平台。这样做是目的是为了防止<em>client_id</em>泄露而造成的恶意网站发起的<em>OIDC</em>流程。</p>
+<ul>
+<li>
+<p>OpenID Connect完成很多与OpenID 2.0 相同的任务，是API-friendly，定义了可选的签名和加密的机制。</p>
+</li>
+<li>
+<p>OAuth 1.0 和 OpenID 2.0 的集成需要扩展，而OpenID Connect协议本身就建立在OAuth 2.0之上。</p>
+</li>
+</ul>
+<p>因此，<strong>OpenID Connect 是“认证”和“授权”的结合。</strong></p>
+<blockquote>
+<p>(身份验证)+ OAuth 2.0 = OpenID Connect (OIDC) = ( Authentication + Authorization + OAuth2.0)</p>
+</blockquote>
+<p>简要而言，<em>OIDC</em>是一种安全机制，用于应用连接到身份认证服务器（Identity Service）获取用户信息，并将这些信息以安全可靠的方法返回给应用。</p>
+<pre><code class="language-markdown"># 借鉴网友说明
+举个例子。某个用户使用*Facebook*应用*“What online quiz best describes you?”* ，该应用可以通过*Facebook*账号登录，则你可以在应用中发起请求到“身份认证服务器”（也就是Facebook的服务器）请求登录。这时你会看到界面，询问是否授权。
+
+ 在 OAuth 中，这些授权被称为scope。OpenID-Connect也有自己特殊的scope--openid ,它必须在第一次请求“身份鉴别服务器”（Identity Provider,简称IDP）时发送过去。
+</code></pre>
+<p><img src="https://img2020.cnblogs.com/blog/1576550/202010/1576550-20201004231420517-548646317.png" alt="" loading="lazy"></p>
+<h2 id="43-jwt-与-oauth2-0">4.3 JWT 与 OAuth2 .0</h2>
+<p>要比较JWT和OAuth2，首先要明白一点就是，这两个根本没有可比性，是两个完全不同的东西。</p>
+<p>但是既然是没有可比性，为何还要放一块比较呢？实际开发应用中，就发现很多拿 JWT和OAuth2.0 作对比，很多情况下，在讨论OAuth2的实现时，会把JSON Web Token作为一种认证机制使用。这也是为什么他们会经常一起出现。</p>
+<h3 id="431-内容区别">4.3.1 内容区别</h3>
+<ul>
+<li>JWT是一种认证协议<br>
+JWT提供了一种用于发布接入<strong>令牌</strong>（Access Token)，并对发布的签名接入令牌进行验证的方法。 令牌（Token）本身包含了一系列声明，应用程序可以根据这些声明限制用户对资源的访问。</li>
+</ul>
+<blockquote>
+<p>一个token包含三部分：<strong>header</strong>、<strong>claims</strong>、<strong>signature</strong></p>
+</blockquote>
+<ul>
+<li>
+<p>OAuth2是一种安全的授权框架</p>
+<p>提供了一套详细的授权机制。用户或应用可以通过公开的或私有的<strong>设置</strong>，授权<strong>第三方应用访问特定资源</strong>。</p>
+</li>
+</ul>
+<blockquote>
+<p>Oauth2定义了一组想当复杂的规范。涉及到：Roles角色、Client Types客户端类型、Client Profile客户端描述、Authorization Grants认证授权、Endpoints终端等。</p>
+</blockquote>
+<h3 id="432-场景区别">4.3.2 场景区别</h3>
+<ul>
+<li>
+<p><strong>jwt应用场景</strong></p>
+<p><strong>1）无状态的分布式API</strong></p>
+</li>
+</ul>
+<blockquote>
+<p>JWT的主要优势在于使用无状态、可扩展的方式处理应用中的用户会话。服务端可以通过内嵌编码的声明信息，很容易地获取用户的会话信息，而不需要去访问用户或会话的数据库。但是，如果系统中需要使用黑名单实现长期有效的token刷新机制，这种无状态的优势就不明显了。</p>
+</blockquote>
+<ul>
+<li>
+<p><strong>Oauth2应用场景</strong></p>
+<p><strong>1）第三方认证服务器</strong></p>
+<p><strong>2）大型企业解决方案</strong></p>
+</li>
+</ul>
+<blockquote>
+<p>API的使用依赖于外部的第三方认证提供者。去认证服务商 那里注册你的应用，然后设置需要访问的用户信息，比如电子邮箱、姓名等。当用户访问站点的注册页面时，会看到连接到第三方认证提供商的入口。用户点击以后被重定向到对应的认证服务商网站，获得用户的授权后就可以访问到需要的信息，然后重定向回来你的应用中。</p>
+</blockquote>
+<h3 id="433-归纳说明">4.3.3 归纳说明</h3>
+<ul>
+<li>
+<p>Oauth2和JWT是完全不同的两种东西，一个是授权认证的框架，另一种则是认证验证的方式方法。OAuth2不像JWT一样是一个严格的标准协议，因此在实施过程中更容易出错。</p>
+</li>
+<li>
+<p>两种方案都需要SSL安全保护，也就是对要传输的数据进行加密编码。安全地传输用户提供的私密信息，在任何一个安全的系统里都是必要的。否则任何人都可以通过侵入网络，在用户登录的时候窃取用户的用户名和密码等信息。</p>
+</li>
+</ul>
+<h1 id="总结">总结</h1>
+<ol>
+<li>本篇主要是对<strong>Identity Server4</strong>的说明，认识到是一个基于OpenID Connect协议标准的身份认证和授权程序。</li>
+<li>简单的涉及对基础知识的认识以及区别说明，从OAuth、OpenID、OpenID Connect以及JWT等进行对比区别说明。</li>
+<li>在后续中会对<strong>Identity Server4</strong>中常用术语说明，多种授权模式，数据库持久化以及UI界面优化和常见问题，搭建一个完整可用的认证授权项目。</li>
+<li>如果有不对的或不理解的地方，希望大家可以多多指正，提出问题，一起讨论,不断学习,共同进步。</li>
+</ol>
+<h1 id="资料">资料</h1>
+<p><strong><a href="http://docs.identityserver.io/en/release/index.html">Identity Server 官方文档</a></strong></p>
+<p><strong><a href="https://jwt.io/introduction/">JSON Web Token</a></strong></p>
+<p><strong><a href="http://www.ruanyifeng.com/blog/2014/05/oauth_2_0.html">理解OAuth 2.0</a></strong></p>
+<p><strong><a href="http://docs.identityserver.io/en/release/topics/grant_types.html">Identity Server 授权类型</a></strong></p>
+
+</div>
+<div id="MySignature"></div>
+<div class="clear"></div>
+<div id="blog_post_info_block">
+    <div id="blog_post_info"></div>
+    <div class="clear"></div>
+    <div id="post_next_prev"></div>
+</div>
+            </div>
+            <div class="postDesc">posted @ 
+<span id="post-date">2020-10-05 08:01</span>&nbsp;
+<a href="https://www.cnblogs.com/i3yuan/">艾三元</a>&nbsp;
+阅读(<span id="post_view_count">46</span>)&nbsp;
+评论(<span id="post_comment_count">0</span>)&nbsp;
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=13768815" rel="nofollow">编辑</a>&nbsp;
+<a href="javascript:void(0)" onclick="AddToWz(13768815);return false;">收藏</a></div>
+        </div>
+	    
+	    
+    </div><!--end: topics 文章、评论容器-->
+</div>
+<script src="https://common.cnblogs.com/highlight/9.12.0/highlight.min.js"></script>
+<script>markdown_highlight();</script>
+<script>
+    var allowComments = true, cb_blogId = 485408, cb_blogApp = 'i3yuan', cb_blogUserGuid = '97098514-4dc0-4b4d-7476-08d66e70bc4e';
+    var cb_entryId = 13768815, cb_entryCreatedDate = '2020-10-05 08:01', cb_postType = 1;
+    loadViewCount(cb_entryId);
+</script><a name="!comments"></a>
+<div id="blog-comments-placeholder"></div>
+<script>
+    var commentManager = new blogCommentManager();
+    commentManager.renderComments(0);
+</script>
+<div id="comment_form" class="commentform">
+    <a name="commentform"></a>
+    <div id="divCommentShow"></div>
+    <div id="comment_nav"><span id="span_refresh_tips"></span><a href="javascript:void(0);" onclick="return RefreshCommentList();" id="lnk_RefreshComments" runat="server" clientidmode="Static">刷新评论</a><a href="#" onclick="return RefreshPage();">刷新页面</a><a href="#top">返回顶部</a></div>
+    <div id="comment_form_container"></div>
+    <div class="ad_text_commentbox" id="ad_text_under_commentbox"></div>
+    <div id="ad_t2"></div>
+    <div id="opt_under_post"></div>
+    <div id="cnblogs_c1" class="c_ad_block">
+        <div id='div-gpt-ad-1592365906576-0' style='width: 300px; height: 250px;'></div>
+    </div>
+    <div id="under_post_news"></div>
+    <div id="cnblogs_c2" class="c_ad_block">
+        <div id='div-gpt-ad-1592366332455-0' style='width: 468px; height: 60px;'></div>
+    </div>
+    <div id="under_post_kb"></div>
+    <div id="HistoryToday" class="c_ad_block"></div>
+    <script type="text/javascript">
+        fixPostBody();
+        deliverBigBanner();
+setTimeout(function() { incrementViewCount(cb_entryId); }, 50);        deliverT2();
+        deliverC1C2();
+        loadNewsAndKb();
+        loadBlogSignature();
+LoadPostCategoriesTags(cb_blogId, cb_entryId);        LoadPostInfoBlock(cb_blogId, cb_entryId, cb_blogApp, cb_blogUserGuid);
+        GetPrevNextPost(cb_entryId, cb_blogId, cb_entryCreatedDate, cb_postType);
+        loadOptUnderPost();
+        GetHistoryToday(cb_blogId, cb_blogApp, cb_entryCreatedDate);
+    </script>
+</div>
+	</div><!--end: forFlow -->
+	</div><!--end: mainContent 主体内容容器-->
+
+	<div id="sideBar">
+		<div id="sideBarMain">
+			
+<div id="sidebar_news" class="newsItem">
+            <script>loadBlogNews();</script>
+</div>
+
+<div id="sidebar_ad"></div>
+			<div id="blog-calendar" style="display:none"></div><script>loadBlogDefaultCalendar();</script>
+			
+			<div id="leftcontentcontainer">
+				<div id="blog-sidecolumn"></div>
+                    <script>loadBlogSideColumn();</script>
+			</div>
+			
+		</div><!--end: sideBarMain -->
+	</div><!--end: sideBar 侧边栏容器 -->
+	<div class="clear"></div>
+	</div><!--end: main -->
+	<div class="clear"></div>
+	<div id="footer">
+		<!--done-->
+Copyright &copy; 2020 艾三元
+<br /><span id="poweredby">Powered by .NET Core on Kubernetes</span>
+
+
+
+	</div><!--end: footer -->
+</div><!--end: home 自定义的最大容器 -->
+
+
+    <div id="page_end_html">
+        
+<div id="pageEnd">
+&nbsp;
+</div>
+
+<!-- 火箭 -->
+<div style="display: none;" id="rocket-to-top">
+    <div style="opacity:0;display: block;" class="level-2"></div>
+    <div class="level-3"></div>
+</div>
+
+<!--图片放大-->
+<!-- lightbox的样式 -->
+<link href="https://blog-static.cnblogs.com/files/yadongliang/lightbox.css" rel="stylesheet">
+
+<!-- lightbox.js核心代码 -->
+<script src="https://blog-static.cnblogs.com/files/yadongliang/lightbox-plus-jquery.js"></script>
+<script type='text/javascript'>$('#cnblogs_post_body img').wrap(function(){return "<a href='"+$(this).attr("src")+"' data-lightbox='example-set'></a>"});</script>
+<script type='text/javascript'>$(".code_img_closed").unwrap();</script>
+<script type='text/javascript'>$(".code_img_opened").unwrap();</script>
+
+<!--icon图标-->
+<script type="text/javascript" language="javascript">
+　　//Setting ico for cnblogs
+　　var linkObject = document.createElement('link');
+　　linkObject.rel = "shortcut icon";
+　　linkObject.href = "https://files-cdn.cnblogs.com/files/i3yuan/favicon.ico";
+　　document.getElementsByTagName("head")[0].appendChild(linkObject);
+</script>
+<!--点击爱心-->
+<script type="text/javascript" language="javascript">
+(function(window,document,undefined){
+        var hearts = [];
+        window.requestAnimationFrame = (function(){
+                return window.requestAnimationFrame || 
+                           window.webkitRequestAnimationFrame ||
+                           window.mozRequestAnimationFrame ||
+                           window.oRequestAnimationFrame ||
+                           window.msRequestAnimationFrame ||
+                           function (callback){
+                                   setTimeout(callback,1000/60);
+                           }
+        })();
+        init();
+        function init(){
+                css(".heart{width: 10px;height: 10px;position: fixed;background: #f00;transform: rotate(45deg);-webkit-transform: rotate(45deg);-moz-transform: rotate(45deg);}.heart:after,.heart:before{content: '';width: inherit;height: inherit;background: inherit;border-radius: 50%;-webkit-border-radius: 50%;-moz-border-radius: 50%;position: absolute;}.heart:after{top: -5px;}.heart:before{left: -5px;}");
+                attachEvent();
+                gameloop();
+        }
+        function gameloop(){
+                for(var i=0;i<hearts.length;i++){
+                    if(hearts[i].alpha <=0){
+                            document.body.removeChild(hearts[i].el);
+                            hearts.splice(i,1);
+                            continue;
+                    }
+                    hearts[i].y--;
+                    hearts[i].scale += 0.004;
+                    hearts[i].alpha -= 0.013;
+                    hearts[i].el.style.cssText = "left:"+hearts[i].x+"px;top:"+hearts[i].y+"px;opacity:"+hearts[i].alpha+";transform:scale("+hearts[i].scale+","+hearts[i].scale+") rotate(45deg);background:"+hearts[i].color;
+            }
+            requestAnimationFrame(gameloop);
+        }
+        function attachEvent(){
+                var old = typeof window.onclick==="function" && window.onclick;
+                window.onclick = function(event){
+                        old && old();
+                        createHeart(event);
+                }
+        }
+        function createHeart(event){
+            var d = document.createElement("div");
+            d.className = "heart";
+            hearts.push({
+                    el : d,
+                    x : event.clientX - 5,
+                    y : event.clientY - 5,
+                    scale : 1,
+                    alpha : 1,
+                    color : randomColor()
+            });
+            document.body.appendChild(d);
+    }
+    function css(css){
+            var style = document.createElement("style");
+                style.type="text/css";
+                try{
+                    style.appendChild(document.createTextNode(css));
+                }catch(ex){
+                    style.styleSheet.cssText = css;
+                }
+                document.getElementsByTagName('head')[0].appendChild(style);
+    }
+        function randomColor(){
+                return "rgb("+(~~(Math.random()*255))+","+(~~(Math.random()*255))+","+(~~(Math.random()*255))+")";
+        }
+})(window,document);
+</script>
+<!-- <div id="jsi-flying-fish-container" class="container"></div> -->
+  <script src='https://blog-static.cnblogs.com/files/elkyo/fish.js'></script>
+  <style>
+  @media only screen and (max-width: 767px){
+  #sidebar_search_box input[type=text]{width:calc(100% - 24px)}
+  }
+  </style>
+<!--目录-->
+
+<script src="https://cdn.bootcss.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<script>
+jQuery.fn.wait = function (func, times, interval) {
+    var _times = times || -1,
+        //100次
+        _interval = interval || 20,
+        //20毫秒每次 
+        _self = this,
+        _selector = this.selector,
+        //选择器
+        _iIntervalID; //定时器id
+    if (this.length) { //如果已经获取到了，就直接执行函数
+        func && func.call(this);
+    } else {
+        _iIntervalID = setInterval(function query() {
+            if (!_times) { //是0就退出
+                clearInterval(_iIntervalID);
+            }
+            _times <= 0 || _times--; //如果是正数就 --
+            _self = $(_selector); //再次选择
+            if (_self.length) { //判断是否取到
+                func && func.call(_self);
+                clearInterval(_iIntervalID);
+            }
+        }, _interval);
+    }
+    return this;
+}
+
+function focusFunction(){
+	var _targetTop = $('#comment_form_container').offset().top;//获取位置
+	jQuery("html,body").animate({scrollTop:_targetTop},300);//跳转
+}
+
+function focusFollow(){
+	var _targetTop = $('#profile_block').offset().top;//获取位置
+	jQuery("html,body").animate({scrollTop:_targetTop},300);//跳转
+}
+
+$(document).ready(function(){
+	$("<div id='toTop'style='zoom:0;'></div>").appendTo($("body")).bind("click", function(){
+		$("body,html").animate({ scrollTop: 0 }, 150);
+	});
+
+	$('#cnblogs_post_body pre').find('>code').parent().css({'border':'dashed 1px #aaa'});
+//,'border-left':'solid 2px #6CE26C'
+});
+
+//js截取字符串，中英文都能用  
+//如果给定的字符串大于指定长度，截取指定长度返回，否者返回源字符串。  
+//字符串，长度  
+/** 
+ * js截取字符串，中英文都能用 
+ * @param str：需要截取的字符串 
+ * @param len: 需要截取的长度 
+ */
+function cutstr(str, len) {
+    var str_length = 0;
+    var str_len = 0;
+    str_cut = new String();
+    str_len = str.length;
+    for (var i = 0; i < str_len; i++) {
+        a = str.charAt(i);
+        str_length++;
+        if (escape(a).length > 4) {
+            //中文字符的长度经编码之后大于4  
+            str_length++;
+        }
+        str_cut = str_cut.concat(a);
+        if (str_length >= len) {
+            str_cut = str_cut.concat("...");
+            return str_cut;
+        }
+    }
+    //如果给定字符串小于指定长度，则返回源字符串；  
+    if (str_length < len) {
+        return str;
+    }
+}
+</script>
+<style>
+@media(max-width: 768px){
+  #sideToolbar{
+      display:none
+	}
+}
+@media(min-width: 768px){
+   #sideToolbar {
+	position: fixed;
+	/*bottom: -25px;*/
+	top:25px;
+	right: 15px;
+	width: 250px;
+	height: 450px
+	}
+}
+
+
+#sideCatalog{
+	background-color:#fff;
+	padding-bottom:10px;
+	border-radius:5px;
+}
+#sideCatalog-sidebar {
+	-moz-border-bottom-colors: none;
+	-moz-border-left-colors: none;
+	-moz-border-right-colors: none;
+	-moz-border-top-colors: none;
+	background-color: #eaeaea;
+	border-color: -moz-use-text-color #eaeaea;
+	border-image: none;
+	border-left: 1px solid #eaeaea;
+	border-right: 1px solid #eaeaea;
+	border-style: none solid;
+	border-width: 0 1px;
+	height: 353px;
+	left: 5px;
+	position: absolute;
+	top: 0;
+	width: 0
+}
+
+#sideCatalog-catalog {
+	height: 325px;
+	padding-top: 18px;
+	overflow-y:auto;
+	overflow-x:hidden;
+	padding-left: 23px;
+	position: relative
+}
+#sideCatalog #sideCatalog-sidebar .sideCatalog-sidebar-top {
+	cursor: pointer;
+	top: 0
+}
+#sideCatalog #sideCatalog-sidebar .sideCatalog-sidebar-bottom {
+	bottom: 0
+}
+#sideCatalog #sideCatalog-sidebar .sideCatalog-sidebar-top,#sideCatalog #sideCatalog-sidebar .sideCatalog-sidebar-bottom {
+	background: url("https://files.cnblogs.com/files/asxinyu/sideToolbar.gif") no-repeat scroll 0 -199px transparent;
+	height: 10px;
+	left: -5px;
+	overflow: hidden;
+	position: absolute;
+	width: 10px
+}
+#sideCatalog li {
+	margin: 0px;
+	padding: 0 7px;
+	text-align: left;
+	position: relative
+}
+#sideCatalog li: hover {
+	background-color: #f5f5f5
+}
+#sideCatalog-catalog ul{
+list-style: none;
+}
+#sideCatalog-catalog ul .active {
+	background-color: #f5f5f5
+}
+#sideCatalog-catalog .active a {
+	color: #519cea
+}
+#sideCatalog-catalog a: hover {
+	color: #519cea
+}
+#sideCatalog span: first-child {
+	color: #999;
+	font-family: Arial;
+	font-size: 14px;
+	font-weight: bold;
+	padding-right: 5px
+}
+
+#sideCatalog li.h2Offset {
+	padding-left: 45px;
+	text-indent: -25px
+}
+
+#sideCatalog li.h3Offset {
+	padding-left: 90px;
+	text-indent: -60px
+}
+#sideCatalog a {
+	text-decoration: none;
+	color: #555;
+	font-weight: bold
+}
+.sideCatalog-dot {
+	background: url("https://files.cnblogs.com/files/asxinyu/sideToolbar.gif") repeat scroll 0 -222px transparent;
+	cursor: pointer;
+	font-size: 12px;
+	height: 10px;
+	left: -20px;
+	line-height: 12px;
+	overflow: hidden;
+	position: absolute;
+	top: 4px;
+	width: 6px
+}
+#sideCatalog .highlight .sideCatalog-dot {
+	background: url("https://files.cnblogs.com/files/asxinyu/sideToolbar.gif") no-repeat scroll -271px -38px transparent;
+	height: 13px;
+	left: -23px;
+	top: 3px;
+	width: 18px
+}
+#sideCatalogBtn {
+	background: url("https://files.cnblogs.com/files/asxinyu/sideToolbar.gif") no-repeat scroll 0 0 transparent;
+	cursor: pointer;
+	display: block;
+	height: 45px;
+	margin-bottom: 5px;
+	margin-left: 5px;
+	position: relative;
+	width: 45px;
+	margin-top: 7px;
+	outline: 0
+}
+#sideCatalogBtn: hover {
+	background: url("https://files.cnblogs.com/files/asxinyu/sideToolbar.gif") no-repeat scroll -154px 0 transparent
+}
+.sideCatalogBtnDisable {
+	background: url("https://files.cnblogs.com/files/asxinyu/sideToolbar.gif") no-repeat scroll -104px 0 transparent !important
+}
+#sideToolbar-up {
+	background: url("https://files.cnblogs.com/files/asxinyu/sideToolbar.gif") no-repeat scroll -1px -62px transparent;
+	border-radius: 2px;
+	display: block;
+	height: 45px;
+	margin-left: 5px;
+	width: 45px;
+	outline: 0
+}
+#sideToolbar-up: hover {
+	background: url("https://files.cnblogs.com/files/asxinyu/sideToolbar.gif") no-repeat scroll -74px -62px transparent
+}
+</style>
+<script>
+
+var a = $(document);
+a.ready(function () {
+    var b = $('body'),
+        c = 'cnblogs_post_body',
+        d = 'sideToolbar',
+        e = 'sideCatalog',
+        f = 'sideCatalog-catalog',
+        g = 'sideCatalogBtn',
+        h = 'sideToolbar-up',
+        i = '<div id="sideToolbar" style="">\<div class="sideCatalogBg"id="sideCatalog">\<div id="sideCatalog-sidebar">\<div class="sideCatalog-sidebar-top"></div>\<div class="sideCatalog-sidebar-bottom"></div>\</div>\<div id="sideCatalog-catalog">\<ul class="nav"style="zoom:1">\</ul>\</div>\</div>\<a href="javascript:void(0);"id="sideCatalogBtn"class="sideCatalogBtnDisable"></a>\</div>',
+        j = '',
+        k = 200,
+        l = 0,
+        m = 0,
+        n = 0,
+        o, p = 18,
+        q = true,
+        r = true,
+        s = $('#' + c);
+    if (s.length === 0) {
+        return
+    };
+    b.append(i);
+    o = s.find(':header');
+    if (o.length > p) {
+        r = false;
+        var t = s.find('h1');
+        var u = s.find('h2');
+        if (t.length + u.length > p) {
+            q = false
+        }
+    };
+	
+	j += '<li><span style="font-size: 14pt;">★本文目录</span></li>';
+    o.each(function (t) {
+    
+        var u = $(this),
+            v = u[0];
+
+        var title=u.text();
+        var text=u.text();
+
+        u.attr('id', 'autoid-' + l + '-' + m + '-' + n)
+		
+       //if (v.localName === 'h2') {
+//            l++;
+//            m = 0;
+//            if(text.length>26) text=text.substr(0,26)+"...";
+//            j += '<li><a href="#' + u.attr('id') + '" title="' + title + '">' + text + '</a><span class="sideCatalog-dot"></span></li>';
+//        } else if (v.localName === 'h3') {
+//            m++;
+//            n = 0;
+//            if(q){
+//	            if(text.length>30) text=text.substr(0,30)+"...";
+//	            j += '<li class="h2Offset"><a href="#' + u.attr('id') + '" title="' + title + '">' + text + '</a></li>';
+//        	}
+//        } 
+         l++;
+         m = 0;
+         if(text.length>26) text=text.substr(0,26)+"...";
+         j += '<li><a href="#' + u.attr('id') + '" title="' + title + '">' + text + '</a><span class="sideCatalog-dot"></span></li>';
+
+    });
+    $('#' + f + '>ul').html(j);
+    b.data('spy', 'scroll');
+    b.data('target', '.sideCatalogBg');
+    $('body').scrollspy({
+        target: '.sideCatalogBg'
+    });
+    $sideCatelog = $('#' + e);
+    $('#' + g).on('click', function () {
+        if ($(this).hasClass('sideCatalogBtnDisable')) {
+            $sideCatelog.css('visibility', 'hidden')
+        } else {
+            $sideCatelog.css('visibility', 'visible')
+        };
+        $(this).toggleClass('sideCatalogBtnDisable')
+    });
+    $('#' + h).on('click', function () {
+        $("html,body").animate({
+            scrollTop: 0
+        }, 500)
+    });
+    $sideToolbar = $('#' + d);
+
+});
+</script>
+    </div>
+</body>
+</html>

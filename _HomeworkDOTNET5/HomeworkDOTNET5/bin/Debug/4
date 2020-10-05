@@ -1,0 +1,451 @@
+﻿<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="referrer" content="origin" />
+    <meta name="description" content="在开发中，我们经常会使用try/catch块来捕获异常进行处理，如果有些代码中忘记捕获异常或者不可见的一些异常出现，就会响应给前端一些不友好的提示，这时候我们可以使用全局异常处理。这样就不用在代码中写" />
+    <meta property="og:description" content="在开发中，我们经常会使用try/catch块来捕获异常进行处理，如果有些代码中忘记捕获异常或者不可见的一些异常出现，就会响应给前端一些不友好的提示，这时候我们可以使用全局异常处理。这样就不用在代码中写" />
+    <meta http-equiv="Cache-Control" content="no-transform" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>spring-boot-route（四）全局异常处理 - Java旅途 - 开发者的网上家园</title>
+    <link id="favicon" rel="shortcut icon" href="//common.cnblogs.com/favicon.svg" type="image/svg+xml" />
+    
+    <link rel="stylesheet" href="/css/blog-common.min.css?v=dktCmaTYc_s0a4EnvC6tuH5wYElIJN_131iOybZOKro" />
+    <link id="MainCss" rel="stylesheet" href="/skins/codinglife/bundle-codinglife.min.css?v=SDUoHtQZgcVDSFJn4yfSjWOXiA-e0VlpIQceYK9gqsI" />
+    
+    <link id="mobile-style" media="only screen and (max-width: 767px)" type="text/css" rel="stylesheet" href="/skins/codinglife/bundle-codinglife-mobile.min.css?v=JtOonyglmq10yOLdtvmh-WsVtFwm8HRB8mR_g_TGArQ" />
+    
+    <link type="application/rss+xml" rel="alternate" href="https://www.cnblogs.com/zhixie/rss" />
+    <link type="application/rsd+xml" rel="EditURI" href="https://www.cnblogs.com/zhixie/rsd.xml" />
+    <link type="application/wlwmanifest+xml" rel="wlwmanifest" href="https://www.cnblogs.com/zhixie/wlwmanifest.xml" />
+    <script>
+        var currentBlogId = 522067;
+        var currentBlogApp = 'zhixie';
+        var cb_enable_mathjax = false;
+        var isLogined = false;
+        var isBlogOwner = false;
+        var skinName = 'CodingLife';
+        var visitorUserId = '';
+    </script>
+        <script>
+            var currentPostDateAdded = '2020-10-04 10:04';
+        </script>
+    <script src="https://common.cnblogs.com/scripts/jquery-2.2.0.min.js"></script>
+    <script src="/js/blog-common.min.js?v=quLP6V96NCUwrp9e9p4Tc3ZzspjwpbJyGVOAQHoms5M"></script>
+    
+    
+    
+</head>
+<body>
+    <a name="top"></a>
+    <div id="top_nav" class="navbar">
+        <nav id="nav_main" class="navbar-main">
+            <ul id="nav_left" class="navbar-list navbar-left">
+                <li class="navbar-branding">
+                    <a href="https://www.cnblogs.com/" title="开发者的网上家园"><img src="/images/logo.svg?v=R9M0WmLAIPVydmdzE2keuvnjl-bPR7_35oHqtiBzGsM" alt="博客园Logo" /></a>
+                </li>
+                <li><a href="/" onclick="ga('send', 'event', 'Link', 'click', 'skin-navbar-sitehome')">首页</a></li>
+                <li><a href="https://news.cnblogs.com/" onclick="ga('send', 'event', 'Link', 'click', 'skin-navbar-news')">新闻</a></li>
+                <li><a href="https://q.cnblogs.com/" onclick="ga('send', 'event', 'Link', 'click', 'skin-navbar-q')">博问</a></li>
+                <li><a id="nav_brandzone" href="https://brands.cnblogs.com/" onclick="ga('send', 'event', 'Link', 'click', 'skin-navbar-brands')">专区</a></li>
+                <li><a href="https://ing.cnblogs.com/" onclick="ga('send', 'event', 'Link', 'click', 'skin-navbar-ing')">闪存</a></li>
+                <li><a href="https://edu.cnblogs.com/" onclick="ga('send', 'event', 'Link', 'click', 'skin-navbar-edu')">班级</a></li>
+            </ul>
+            <ul id="nav_right" class="navbar-list navbar-right">
+                <li>
+                    <form id="zzk_search" class="navbar-search" action="https://zzk.cnblogs.com/s" method="get">
+                        <input name="w" id="zzk_search_input" placeholder="代码改变世界" type="text" tabindex="3" />
+                        <button type="submit" id="zzk_search_button">
+                            <img src="/images/aggsite/search.svg" alt="搜索" />
+                        </button>
+                    </form>
+                </li>
+                <li id="navbar_login_status" class="navbar-list">
+                    <a id="navblog-myblog-icon" class="navbar-user-info navbar-blog" href="https://passport.cnblogs.com/GetBlogApplyStatus.aspx" alt="我的博客" title="我的博客">
+                        <img id="myblog_icon" class="navbar-icon" src="/images/aggsite/myblog.svg" alt="我的博客" />
+                    </a>
+                    <a class="navbar-user-info navbar-message navbar-icon-wrapper" href="https://msg.cnblogs.com/" alt="短消息" title="短消息">
+                        <img id="msg_icon" class="navbar-icon" src="/images/aggsite/message.svg?v=oS4PkibyMjZ9rGD5XAcLt99uW_s76Javy2up4dbnZNY" alt="短消息" />
+                        <span id="msg_count" style="display: none"></span>
+                    </a>
+                    <div id="user_info" class="navbar-user-info dropdown">
+                        <a class="dropdown-button" href="https://home.cnblogs.com/">
+                            <img id="user_icon" class="navbar-avatar" src="/images/aggsite/avatar-default.svg" alt="用户头像" />
+                        </a>
+                        <div class="dropdown-menu">
+                            <a id="navblog-myblog-text" href="https://passport.cnblogs.com/GetBlogApplyStatus.aspx">我的博客</a>
+                            <a href="https://home.cnblogs.com/">我的园子</a>
+                            <a href="https://account.cnblogs.com/settings/account">账号设置</a>
+                            <a href="javascript:void(0)" onclick="logout();">退出登录</a>
+                        </div>
+                    </div>
+                    <a class="navbar-anonymous" href="https://account.cnblogs.com/signup/">注册</a>
+                    <a class="navbar-anonymous" href="https://account.cnblogs.com/signin/?returnUrl=https://www.cnblogs.com/">登录</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+    
+    
+<!--done-->
+<div id="home">
+<div id="header">
+	<div id="blogTitle">
+        <a id="lnkBlogLogo" href="https://www.cnblogs.com/zhixie/"><img id="blogLogo" src="/skins/custom/images/logo.gif" alt="返回主页" /></a>		
+		
+<!--done-->
+<h1><a id="Header1_HeaderTitle" class="headermaintitle HeaderMainTitle" href="https://www.cnblogs.com/zhixie/">Java旅途</a>
+</h1>
+<h2>
+微信搜索『Java旅途』，每天推送优质文章
+</h2>
+
+
+
+
+		
+	</div><!--end: blogTitle 博客的标题和副标题 -->
+	<div id="navigator">
+		
+<ul id="navList">
+<li><a id="blog_nav_sitehome" class="menu" href="https://www.cnblogs.com/">
+博客园</a>
+</li>
+<li>
+<a id="blog_nav_myhome" class="menu" href="https://www.cnblogs.com/zhixie/">
+首页</a>
+</li>
+<li>
+
+<a id="blog_nav_newpost" class="menu" href="https://i.cnblogs.com/EditPosts.aspx?opt=1">
+新随笔</a>
+</li>
+<li>
+<a id="blog_nav_contact" class="menu" href="https://msg.cnblogs.com/send/Java%E6%97%85%E9%80%94">
+联系</a></li>
+<li>
+<a id="blog_nav_rss" class="menu" href="javascript:void(0)" data-rss="https://www.cnblogs.com/zhixie/rss/">
+订阅</a>
+<!--<partial name="./Shared/_XmlLink.cshtml" model="Model" /></li>--></li>
+<li>
+<a id="blog_nav_admin" class="menu" href="https://i.cnblogs.com/">
+管理</a>
+</li>
+</ul>
+
+
+		<div class="blogStats">
+			
+			<span id="stats_post_count">随笔 - 
+68&nbsp; </span>
+<span id="stats_article_count">文章 - 
+0&nbsp; </span>
+<span id="stats-comment_count">评论 - 
+32</span>
+
+			
+		</div><!--end: blogStats -->
+	</div><!--end: navigator 博客导航栏 -->
+</div><!--end: header 头部 -->
+
+<div id="main">
+	<div id="mainContent">
+	<div class="forFlow">
+		<div id="post_detail">
+    <!--done-->
+    <div id="topics">
+        <div class="post">
+            <h1 class = "postTitle">
+                
+<a id="cb_post_title_url" class="postTitle2 vertical-middle" href="https://www.cnblogs.com/zhixie/p/13768583.html">
+    <span>spring-boot-route（四）全局异常处理</span>
+    
+
+
+</a>
+
+            </h1>
+            <div class="clear"></div>
+            <div class="postBody">
+                
+<div id="cnblogs_post_body" class="blogpost-body cnblogs-markdown">
+    <p>在开发中，我们经常会使用<code>try/catch块</code>来捕获异常进行处理，如果有些代码中忘记捕获异常或者不可见的一些异常出现，就会响应给前端一些不友好的提示，这时候我们可以使用全局异常处理。这样就不用在代码中写那些烦人的<code>try/catch块了</code>，代码的可读性也会提高。</p>
+<p>SpringBoot提供的的注解<code>@ControllerAdvice</code>表示开启全局异常捕获，在自定义的异常方法上使用<code>ExceptionHandler</code>来进行统一处理。</p>
+<p>下面一起看看如何优雅的处理全局异常！</p>
+<h3 id="一-定义响应状态码及信息的枚举类">一 定义响应状态码及信息的枚举类</h3>
+<pre><code class="language-java">@Getter
+public enum CodeEnum {
+    
+    SUCCESS(0,"请求成功"),
+    ERROR(500,"未知异常"),
+    ERROR_EMPTY_RESULT(1001,"查询结果为空"),
+    ERROR_INCOMPLETE_RESULT(1002,"请求参数不全");
+    
+    private int code;
+    private String message;
+    CodeEnum(int code,String message){
+        this.code = code;
+        this.message = message;
+    }
+}
+</code></pre>
+<h3 id="二-定义响应数据的实体类">二 定义响应数据的实体类</h3>
+<pre><code class="language-java">@Slf4j
+@Data
+public class R&lt;T&gt; implements Serializable {
+
+    private static final long serialVersionUID = 572235155491705152L;
+    /**
+     * 响应的状态码
+     */
+    private int code;
+    /***
+     * 响应的信息
+     */
+    private String message;
+    /**
+     * 响应数据
+     */
+    private T data;
+
+    /**
+     * 放入响应码并返回
+     * @param code
+     * @param msg
+     * @return
+     */
+    public R fillCode(int code,String msg){
+        this.code = code;
+        this.message = msg;
+        return this;
+    }
+
+    /**
+     * 放入响应码并返回
+     * @param codeEnum
+     * @return
+     */
+    public R fillCode(CodeEnum codeEnum){
+        this.code = codeEnum.getCode();
+        this.message = codeEnum.getMessage();
+        return this;
+    }
+
+    /**
+     * 放入数据并响应成功状态
+     * @param data
+     * @return
+     */
+    public R fillData(T data){
+        this.code = CodeEnum.SUCCESS.getCode();
+        this.message = CodeEnum.SUCCESS.getMessage();
+        this.data = data;
+        return this;
+    }
+}
+</code></pre>
+<h3 id="三-自定义两个异常">三 自定义两个异常</h3>
+<p>根据业务需求自定义异常，在本文中我定义了两个异常，分别用作响应结果为空时处理和请求参数错误时处理。</p>
+<pre><code class="language-java">@Data
+public class EmptyResutlException extends RuntimeException {
+
+    private static final long serialVersionUID = -8839210969758687047L;
+    private int code;
+    private String message;
+
+    public EmptyResutlException(CodeEnum codeEnum){
+        this.code = codeEnum.getCode();
+        this.message = codeEnum.getMessage();
+    }
+}
+</code></pre>
+<pre><code class="language-java">@Data
+public class RequestParamException extends RuntimeException {
+
+    private static final long serialVersionUID = 4748844811214637041L;
+    private int code;
+    private String message;
+
+    public RequestParamException(CodeEnum codeEnum){
+        this.code = codeEnum.getCode();
+        this.message = codeEnum.getMessage();
+    }
+}
+</code></pre>
+<h3 id="四-定义全局异常处理类">四 定义全局异常处理类</h3>
+<p>由于这里我想要响应的结果为实体类对象，因此我直接用<code>@RestControllerAdvice</code>来代替了<code>@ControllerAdvice</code>，这两个注解的差别跟<code>@Controller</code>和<code>@RestController</code>一样，rest的响应体为json格式的数据。</p>
+<pre><code class="language-java">@RestControllerAdvice
+@Slf4j
+public class GlobalExceptionHandler {
+
+    /**
+     * 查询结果为空时处理
+     * @param e
+     * @return
+     */
+    @ExceptionHandler(EmptyResutlException.class)
+    public R emptyResultExceptionHandler(EmptyResutlException e){
+        log.error("查询结果为空：{}",e.getMessage());
+        R result = new R();
+        result.fillCode(e.getCode(),e.getMessage());
+        return result;
+    }
+
+    /**
+     * 请求参数错误时处理
+     * @param e
+     * @return
+     */
+    @ExceptionHandler(RequestParamException.class)
+    public R requestParamExceptionHandler(RequestParamException e){
+        log.error("请求参数不合法：{}",e.getMessage());
+        R result = new R();
+        result.fillCode(e.getCode(),e.getMessage());
+        return result;
+    }
+
+    /**
+     * 处理其他异常
+     * @param e
+     * @return
+     */
+    @ExceptionHandler(Exception.class)
+    public R exceptionHandler(Exception e){
+        log.error("未知异常：{}",e.getMessage());
+        R result = new R();
+        result.fillCode(CodeEnum.ERROR);
+        return result;
+    }
+}
+</code></pre>
+<h3 id="五-自定义接口测试异常">五 自定义接口测试异常</h3>
+<pre><code class="language-java">@RestController
+public class TestController {
+
+    @GetMapping("getString")
+    public R getString(String name){
+
+        if(StringUtils.isEmpty(name)){
+            throw new RequestParamException(1002,"请求参数name为空");
+        }else if ("Java旅途".equals(name)) {
+            // 这里没有查询操作，当请求参数是Java旅途的时候，模拟成查询结果为空
+            throw new EmptyResutlException(1001,"查询结果为空");
+        }
+        // 这里模拟一下除自定义异常外的其他两种异常
+        int i = 0;
+        i = 5/i;
+        return new R().fillData(name);
+    }
+}
+</code></pre>
+<p>在实际开发中可以自定义响应状态码的枚举类和自定义异常以满足需求。</p>
+<p>此是spring-boot-route系列的第四篇文章，这个系列的文章都比较简单，主要目的就是为了帮助初次接触Spring Boot 的同学有一个系统的认识。本文已收录至我的<a href="https://github.com/binzh303/spring-boot-route">github</a>，欢迎各位小伙伴<code>star</code>！</p>
+<p><strong>github</strong>：<a href="https://github.com/binzh303/spring-boot-route">https://github.com/binzh303/spring-boot-route</a></p>
+<h2 id="点关注、不迷路">点关注、不迷路</h2>
+<p>如果觉得文章不错，欢迎<strong>关注</strong>、<strong>点赞</strong>、<strong>收藏</strong>，你们的支持是我创作的动力，感谢大家。</p>
+<p>如果文章写的有问题，请不要吝啬，欢迎留言指出，我会及时核查修改。</p>
+<p>如果你还想更加深入的了解我，可以微信搜索「<strong>Java旅途</strong>」进行关注。回复「<strong>1024</strong>」即可获得学习视频及精美电子书。每天7:30准时推送技术文章，让你的上班路不在孤独，而且每月还有送书活动，助你提升硬实力！</p>
+
+</div>
+<div id="MySignature"></div>
+<div class="clear"></div>
+<div id="blog_post_info_block">
+    <div id="blog_post_info"></div>
+    <div class="clear"></div>
+    <div id="post_next_prev"></div>
+</div>
+            </div>
+            <div class="postDesc">posted @ 
+<span id="post-date">2020-10-04 22:04</span>&nbsp;
+<a href="https://www.cnblogs.com/zhixie/">Java旅途</a>&nbsp;
+阅读(<span id="post_view_count">75</span>)&nbsp;
+评论(<span id="post_comment_count">0</span>)&nbsp;
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=13768583" rel="nofollow">编辑</a>&nbsp;
+<a href="javascript:void(0)" onclick="AddToWz(13768583);return false;">收藏</a></div>
+        </div>
+	    
+	    
+    </div><!--end: topics 文章、评论容器-->
+</div>
+<script src="https://common.cnblogs.com/highlight/9.12.0/highlight.min.js"></script>
+<script>markdown_highlight();</script>
+<script>
+    var allowComments = true, cb_blogId = 522067, cb_blogApp = 'zhixie', cb_blogUserGuid = '9c1db5da-f861-43f5-e791-08d6f39868f9';
+    var cb_entryId = 13768583, cb_entryCreatedDate = '2020-10-04 22:04', cb_postType = 1;
+    loadViewCount(cb_entryId);
+</script><a name="!comments"></a>
+<div id="blog-comments-placeholder"></div>
+<script>
+    var commentManager = new blogCommentManager();
+    commentManager.renderComments(0);
+</script>
+<div id="comment_form" class="commentform">
+    <a name="commentform"></a>
+    <div id="divCommentShow"></div>
+    <div id="comment_nav"><span id="span_refresh_tips"></span><a href="javascript:void(0);" onclick="return RefreshCommentList();" id="lnk_RefreshComments" runat="server" clientidmode="Static">刷新评论</a><a href="#" onclick="return RefreshPage();">刷新页面</a><a href="#top">返回顶部</a></div>
+    <div id="comment_form_container"></div>
+    <div class="ad_text_commentbox" id="ad_text_under_commentbox"></div>
+    <div id="ad_t2"></div>
+    <div id="opt_under_post"></div>
+    <div id="cnblogs_c1" class="c_ad_block">
+        <div id='div-gpt-ad-1592365906576-0' style='width: 300px; height: 250px;'></div>
+    </div>
+    <div id="under_post_news"></div>
+    <div id="cnblogs_c2" class="c_ad_block">
+        <div id='div-gpt-ad-1592366332455-0' style='width: 468px; height: 60px;'></div>
+    </div>
+    <div id="under_post_kb"></div>
+    <div id="HistoryToday" class="c_ad_block"></div>
+    <script type="text/javascript">
+        fixPostBody();
+        deliverBigBanner();
+setTimeout(function() { incrementViewCount(cb_entryId); }, 50);        deliverT2();
+        deliverC1C2();
+        loadNewsAndKb();
+        loadBlogSignature();
+LoadPostCategoriesTags(cb_blogId, cb_entryId);        LoadPostInfoBlock(cb_blogId, cb_entryId, cb_blogApp, cb_blogUserGuid);
+        GetPrevNextPost(cb_entryId, cb_blogId, cb_entryCreatedDate, cb_postType);
+        loadOptUnderPost();
+        GetHistoryToday(cb_blogId, cb_blogApp, cb_entryCreatedDate);
+    </script>
+</div>
+	</div><!--end: forFlow -->
+	</div><!--end: mainContent 主体内容容器-->
+
+	<div id="sideBar">
+		<div id="sideBarMain">
+			
+<div id="sidebar_news" class="newsItem">
+            <script>loadBlogNews();</script>
+</div>
+
+<div id="sidebar_ad"></div>
+			<div id="blog-calendar" style="display:none"></div><script>loadBlogDefaultCalendar();</script>
+			
+			<div id="leftcontentcontainer">
+				<div id="blog-sidecolumn"></div>
+                    <script>loadBlogSideColumn();</script>
+			</div>
+			
+		</div><!--end: sideBarMain -->
+	</div><!--end: sideBar 侧边栏容器 -->
+	<div class="clear"></div>
+	</div><!--end: main -->
+	<div class="clear"></div>
+	<div id="footer">
+		<!--done-->
+Copyright &copy; 2020 Java旅途
+<br /><span id="poweredby">Powered by .NET Core on Kubernetes</span>
+
+
+
+	</div><!--end: footer -->
+</div><!--end: home 自定义的最大容器 -->
+
+
+    
+</body>
+</html>
